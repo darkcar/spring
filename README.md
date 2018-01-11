@@ -341,8 +341,96 @@ public class UserFactory{
 		userService.addService();
 	}
 	```
+	# Namespace Inject
 	
+	```xml
+	<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- Use P namespace inject -->
+    <bean id="person" class="com.liyiandxuegang.property.Person" p:pname="Name Value" />
+	```
 	
+	# Complicated data type
+	
+	* Array, List, Map, Properties
+	
+	## See the example:
+	
+	```xml
+	<!-- Inject complicated data value -->
+    <bean id="personComplicated" class="com.liyiandxuegang.property.Person">
+    	<!-- array -->
+    	<property name="arraysStrings">
+    		<list>
+    			<value>Eric</value>
+    			<value>Mike</value>
+    			<value>Jim</value>
+    		</list>
+    	</property>
+    	<property name="list">
+    		<list>
+    			<value>Eric List</value>
+    			<value>Mike List</value>
+    			<value>Jim List</value>
+    		</list>
+    	</property>
+    	<property name="map">
+    		<map>
+    			<entry key="aa" value="Eric aa" />
+    			<entry key="bb" value="Mike BB" />
+    		</map>
+    	</property>
+    	<property name="properties">
+    		<props>
+    			<prop key="driverClass">com.mysql.jdbc.Driver</prop>
+    			<prop key="username">root</prop>
+    		</props>
+    	</property>
+   </bean>
+   ```
+   
+   ## Inside Person.java, we have all the set method defined. 
+   
+   # IoC and DI (Data Injection)
+   
+   IOC：控制反转，把对象创建交个spring进行配置。
+   
+   DI：依赖注入，向类中属性，设置属性值。
+   
+   关系： 依赖注入不能单独存在，需要在IOC基础上完成操作。
+   
+   # Spring如何整合web项目
+   
+	- Loading spring configuration file use lots of resources.???
+	
+	 ```java
+	 ApplicationContext applicationContext = new ClassPathXmlApplicationContext("bean1.xml");
+	 ```
+	 
+	 ##Solution?
+	 
+	 把加载配置文件和创建对象过程，在服务器启动时候完成。
+	 
+	 ## How (base tech)? 
+	 
+	 * ServletContext Object
+	 
+	 * Listener Object
+	 
+	 ### Steps to load spring objects 
+	 
+	- 在服务器启动时，为每个项目创建ServletContext对象，
+	
+	- 在ServletContext对象创建时，使用监听器可以监听到ServletContext对象在创建
+	
+	- 使用监听器听到ServletContext对象创建时，加载spring的配置文件，把配置文件配置对象创建。
+	
+	- 把创建出来的对象方法ServletContext的域对象里面
+	
+	- 获取对象时，到ServletContext域得到
 	
 	
 	

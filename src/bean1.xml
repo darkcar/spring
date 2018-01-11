@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
     xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
  
@@ -37,6 +38,38 @@
     	-->
     	<property name="userDao" ref="userDao"></property>
     </bean>
+    
+    <!-- Inject complicated data value -->
+    <bean id="personComplicated" class="com.liyiandxuegang.property.Person">
+    	<!-- array -->
+    	<property name="arraysStrings">
+    		<list>
+    			<value>Eric</value>
+    			<value>Mike</value>
+    			<value>Jim</value>
+    		</list>
+    	</property>
+    	<property name="list">
+    		<list>
+    			<value>Eric List</value>
+    			<value>Mike List</value>
+    			<value>Jim List</value>
+    		</list>
+    	</property>
+    	<property name="map">
+    		<map>
+    			<entry key="aa" value="Eric aa" />
+    			<entry key="bb" value="Mike BB" />
+    		</map>
+    	</property>
+    	<property name="properties">
+    		<props>
+    			<prop key="driverClass">com.mysql.jdbc.Driver</prop>
+    			<prop key="username">root</prop>
+    		</props>
+    	</property>
+   </bean>
+    
  </beans>
  
  

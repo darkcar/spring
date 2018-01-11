@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.liyiandxuegang.bean.Bean2;
 import com.liyiandxuegang.bean.Bean3;
 import com.liyiandxuegang.property.Book;
+import com.liyiandxuegang.property.Person;
 import com.liyiandxuegang.property.PropertyDemo1;
 
 public class TestIoC {
@@ -73,5 +74,23 @@ public class TestIoC {
 		UserService userService = (UserService) applicationContext.getBean("userService");
 		
 		userService.addService();
+	}
+	
+	@Test
+	public void testPnamespace() {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("bean1.xml");
+		
+		Person person = (Person) applicationContext.getBean("person");
+		
+		person.testprint();
+	}
+	
+	@Test
+	public void testComplicatedDataType() {
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("bean1.xml");
+		
+		Person person = (Person) applicationContext.getBean("personComplicated");
+		
+		person.testComplicated();
 	}
 }
