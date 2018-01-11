@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+ 	<!-- IoC introduction -->
+	<bean id="user" class="com.liyiandxuegang.ioc.User" scope="prototype"></bean>
+        
+    <!-- User static factory to create object -->
+    <bean id="bean2" class="com.liyiandxuegang.bean.Bean2Factory" factory-method="getBean2" />
+    
+    <!-- Use real factory to create object -->
+    <!-- Create factory object -->
+    <bean id="bean3Factory" class="com.liyiandxuegang.bean.Bean3Factory" />
+    <bean id="bean3" factory-bean="bean3Factory" factory-method="getBean3" />
+    
+    <!-- Use constructor to inject property value -->
+    <bean id="propertyDemo1" class="com.liyiandxuegang.property.PropertyDemo1">
+    	<!-- Inject value -->
+    	<constructor-arg name="userName" value="Test Value" />
+    </bean>
+    
+    <!-- Use set method to inject property value  -->
+    <bean id="book" class="com.liyiandxuegang.property.Book">
+    	<!-- set value -->
+    	<property name="bookName" value="Test Value 2" />
+    </bean>
+    
+    <!-- 注入对象类型的属性 -->
+    <!-- 1. 配置Service和Dao的对象 -->
+    <bean id="userDao" class="com.liyiandxuegang.ioc.UserDao" />
+    <bean id="userService" class="com.liyiandxuegang.ioc.UserService">
+    	<!-- Inject dao obj 
+    		name: service类里面属性的名称
+    		ref: dao配置bean标签的id值
+    	-->
+    	<property name="userDao" ref="userDao"></property>
+    </bean>
+ </beans>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
