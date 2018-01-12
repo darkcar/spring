@@ -432,9 +432,100 @@ public class UserFactory{
 	
 	- 获取对象时，到ServletContext域得到
 	
+# Spring的bean管理（注解）
+
+## 注解 
 	
+1. 代码里特殊的标记，使用注解也可以完成一些功能。
+
+2. 注解写法：@注解名称（属性名称＝属性值）
+ 	
+3. 注解可以使用在类上面，方法上面和属性上面
+
+## 注解 (Steps) － Create class
+
+* import spring-aop.jar
+
+* Configure xml
+
+```xml
+	<!-- define the package to scan -->
+	<context:component-scan base-package="com.liyiandxuegang.anno" />
+```
+
+Then add @annotation above the class or field, or function
+
+```java
+@Component(value="user") // <bean id="user" class="" />
+public class User {
+	public void annoAdd() {
+		System.out.println("anno Add...."); 
+	}
+}
+```
+There are four annotations in Spring:
+
+- @Component [as component]
+
+- @Controller ［Web］
+
+- @Service ［Service］
+
+- @Repository: ［Persistence］ 
+
+功能相同，都是用来创建对象，用来将来对功能的扩展。
+
+###但是控制类的作用范围：scope
+
+```java
+@Component(value="user") // <bean id="user" class="" />
+@Scope(value="prototype")
+public class User {
+	public void annoAdd() {
+		System.out.println("anno Add...."); 
+	}
+}
+```
+
+## 注解方式注入属性
+
+* Create class obj
+
+Create UserDao and UserService obje
+
+```java
+@Component(value="userDao")
+public class UserDao {
+	public void add() {
+		System.out.println("dao........add");
+	}
+}
+
+@Service(value="userService")
+public class UserService {
+	// define the field of userDao
+	@Autowired //自动注入的方法，找类的名字来注入类属性 (1)
+	private UserDao userDao;
 	
-	
+	// Resource second way: but this time, the value of name should be the same as the objects.
+	@Resource(name="userDao2")
+	private UserDao2 userDao2; 	
+
+	public void add() {
+		System.out.println("Service.add ========");
+		userDao.add();
+	}
+}
+```
+
+Use @Resource should be good. 
+
+## Configuration + Annotation 
+
+1. 创建对象操作使用配置文件方式实现；
+
+2. 注入属性的操作使用注解方式实现。
+
 
 
 
