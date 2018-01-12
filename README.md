@@ -621,6 +621,21 @@ public class DaoImpl implements Dao{
 
 3. Aspect
 
+```java
+// Basic class
+public class User{
+	public void add() {}
+	public void update() {}
+	public void delete() {}
+	public void findAll() {}
+}
+
+// 连接点Jointpoint：类里面那些方法可以被增强，这些方法称为连接点。
+// 切入点Aspectpoint：在类里面可以有很多的方法增强，比如实际操作中，只是增强了类中add方法和update方法，实际增强的方法称为切入点。
+
+```
+
+
 
 
 
