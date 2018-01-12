@@ -526,6 +526,100 @@ Use @Resource should be good.
 
 2. 注入属性的操作使用注解方式实现。
 
+Suppose, we have three classes, BookService, BookDao.class, OrdersDao.class
+
+In xml file, 
+
+```xml
+		<context:component-scan base-package="com.liyiandxuegang.xmlanno" />
+        <bean id="bookService" class="com.liyiandxuegang.xmlanno.BookService" />  <!--BookService bookService 
+        <bean id="ordersDao" class="com.liyiandxuegang.xmlanno.OrdersDao" /> <!--OrdersDao ordersDao-->
+        <bean id="bookDao" class="com.liyiandxuegang.xmlanno.BookDao" /> <!--BookDao bookDao-->
+```
+
+In BookService.java file
+
+```java
+public class BookService {
+		@Resource(name="bookDao")
+		private BookDao bookDao;
+		@Resource(name="ordersDao")
+		private OrdersDao ordersDao;
+		public void add() {
+			System.out.println("bookService ..... add");
+			bookDao.book();
+			ordersDao.order();
+		}
+}
+```
+
+Then, we can test it, use the Bean to create the class. 
+
+```java
+	ApplicationContext applicationContext = new ClassPathXmlApplicationContext("bean3.xml");
+	BookService bookService = (BookService)applicationContext.getBean("bookService");
+```
+
+# AOP (Aspect-Oriented Programming) 面向切面编程 
+
+## Concept: 扩展功能不修改源代码实现。采用横向抽取机制，取代了传统纵向继承体系重复性代码(实际就是类的继承).
+
+```java
+public class User{
+	// Add user
+	public void add(User user) {
+		// code ...
+	}
+}
+
+// extends the function
+// add user, then add logging function.
+
+```
+
+纵向体系的问题：比如父类方法名称发生了变化，在子类调用的方法也需要变化。
+
+## 横向抽取机制
+
+底层使用：动态代理方式实现
+
+* One way (with inteface)
+
+```java
+public interface Dao{
+	public void add();
+}
+									[使用动态代理方式，创建接口实现代理对象]
+public class DaoImpl implements Dao{
+	public void add() {
+		// code ....
+	}
+}
+
+// 增强add方法，创建和DaoImpl类平级对象，这个对象不是真正的对象，代理对象实现和DaoImpl相同的功能。
+// Use JDK dynamic proxy.
+```
+
+* Second way (without interface) 使用cglib动态代理，没有接口
+
+```java
+	// user class
+	public class User{
+		public void add() {
+		}
+	}
+	
+	// 动态代理实现， 创建User类的子类的代理对象
+	// 在子类中也可以调用父类的方法，完成增强
+```
+
+## AOP Operation Terms
+
+1. Pointcut
+
+2. Advice
+
+3. Aspect
 
 
 
