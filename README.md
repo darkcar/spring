@@ -736,6 +736,10 @@ In around method, we need to call ProceedingJoinPoint method for function call.
 
 * 复制log4j的配置文件， 复制到src目录下。
 
+## Spring 整合 web项目 15. 15-spring整合web项目
+
+1. action 调用service， service调用dao， 需要使用struts2的内容。
+
 
 
 
