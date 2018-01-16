@@ -732,9 +732,9 @@ In around method, we need to call ProceedingJoinPoint method for function call.
 
 * 日志的一个工具，通过log4j能够看到程序中更详细的信息。经常使用log4j查看日志
 
-*导入log4j的jar包
+* 导入log4j的jar包
 
-*复制log4j的配置文件， 复制到src目录下。
+* 复制log4j的配置文件， 复制到src目录下。
 
 
 
