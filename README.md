@@ -617,9 +617,22 @@ public class DaoImpl implements Dao{
 
 1. Pointcut
 
-2. Advice
+2. Advice:通知或者增强
 
-3. Aspect
+前置通知：在方法执行之前，执行
+
+后置通知：在方法之后执行
+
+异常通知：方法出现异常之后
+
+最终通知：在后置之后执行
+
+环绕通知：在方法之前和之后来执行。
+
+3. Aspect： 切面
+
+把增强应用到具体的方法上，这个过程称为切面。
+
 
 ```java
 // Basic class
@@ -632,11 +645,96 @@ public class User{
 
 // 连接点Jointpoint：类里面那些方法可以被增强，这些方法称为连接点。
 // 切入点Aspectpoint：在类里面可以有很多的方法增强，比如实际操作中，只是增强了类中add方法和update方法，实际增强的方法称为切入点。
-// 09-aop操作术语（二)
+// Advice: 通知或者增强
 ```
 
+## Spring 的AOP操作
 
+1. 在spring里面进行AOP操作，使用AspectJ介绍
 
+Spring 2.0, add AspectJ plugin.
+
+2. 使用aspectJ实现AOP操作，有两种方式：
+
+*基于AspectJ的xml配置方式
+
+*基于AspectJ的注解方式
+
+### AOP preparation
+
+1. Import basic jars, and import aop jars, 
+
+2. Create spring xml, import aop schema.
+
+Use Expression to configuration aspect point. 
+
+Mainly used expressions:
+
+* execution(public|private|* com.liyiandxuegang.aop.Book.add(..))
+
+* execution(* com.liyiandxuegang.aop.Book.*(..))
+
+* execution(* *.*(...))
+
+*execution(* save*(..)): the methods with save starting. 
+
+How to configure? Read the following code:
+
+```xml
+<!-- 配置对象 -->
+	<bean id="book" class="com.liyiandxuegang.aop.Book" />
+	<bean id="myBook" class="com.liyiandxuegang.aop.MyBook" />
+	
+	<!-- 配置aop操作 -->
+	<aop:config>
+		<!-- 1. 配置切入点 -->
+		<aop:pointcut expression="execution(* com.liyiandxuegang.aop.Book.*(..))" id="pointcut1" />
+		<!-- 2. 配置切面 
+			把增强用到方法上
+		-->
+		<aop:aspect ref="myBook">
+			<!-- 配置增强的类型 
+				method: 增强的类中使用那个方法作为前置增强
+			-->
+			<aop:before method="before1" pointcut-ref="pointcut1" />
+		</aop:aspect>
+	</aop:config>
+```
+
+In the code level, we don't need to do anything different. The only thing you need to do is in the xml file. 
+
+```xml
+	<!-- 配置对象 -->
+	<bean id="bookaop" class="com.liyiandxuegang.aop.Book" />
+	<bean id="myBookaop" class="com.liyiandxuegang.aop.MyBook" />
+	
+	<!-- 配置aop操作 -->
+	<aop:config>
+		<!-- 1. 配置切入点 -->
+		<aop:pointcut expression="execution(* com.liyiandxuegang.aop.Book.*(..))" id="pointcut1"></aop:pointcut>
+		<!-- 2. 配置切面 
+			把增强用到方法上
+		-->
+		<aop:aspect ref="myBookaop">
+			<!-- 配置增强的类型 
+				method: 增强的类中使用那个方法作为前置增强
+			-->
+			<aop:before method="before1" pointcut-ref="pointcut1"></aop:before>
+			<aop:after-returning method="after" pointcut-ref="pointcut1"/>
+			<aop:around method="around"  pointcut-ref="pointcut1"/>
+			
+		</aop:aspect>
+	</aop:config>
+```
+In around method, we need to call ProceedingJoinPoint method for function call. 
+
+## log4j Introduciton
+
+* 日志的一个工具，通过log4j能够看到程序中更详细的信息。经常使用log4j查看日志
+
+*导入log4j的jar包
+
+*复制log4j的配置文件， 复制到src目录下。
 
 
 
